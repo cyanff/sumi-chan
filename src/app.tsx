@@ -80,12 +80,12 @@ function App() {
       <div
         ref={overlayRef}
         onMouseDown={overlayDrag}
-        className={`fixed  cursor-grab bottom-10 right-64 z-50 flex flex-col w-96 h-40 bg-neutral-100  text-gray-800 shadow-lg rounded-lg ${
+        className={`fixed  cursor-grab bottom-10 right-64 z-50 flex flex-col w-96 h-40 bg-neutral-100  text-gray-800 shadow-lg rounded-2xl ${
           overlayVisible ? "block" : "hidden"
         }`}
       >
         {/*Title bar*/}
-        <div className="flex justify-end items-center h-8 w-full bg-neutral-300 shrink-0 rounded-t-lg">
+        <div className="flex justify-end items-center h-8 w-full bg-neutral-300 shrink-0 rounded-t-2xl">
           <button
             onClick={() => setOverlayVisible(false)}
             className="flex cursor-pointer justify-center items-center group size-fit mr-2"
@@ -107,7 +107,7 @@ function App() {
 
         {/* Speech */}
         <div className="grow break-words overflow-y-auto py-1 px-3">
-          Some speech here
+          {response}
         </div>
         <img
           src={emotionImages[emotion]}
@@ -125,18 +125,16 @@ function App() {
         ></div>
 
         {/* Resizer Display*/}
-        <div className="rounded-br-2xl bottom-0 right-0 pointer-events-none w-3 h-3 absolute bg-gray-600 opacity-40"></div>
+        <div className="rounded-br-2xl bottom-0 right-0 pointer-events-none w-3 h-3 rounded-xl absolute bg-gray-600 opacity-40"></div>
       </div>
 
       {/* Chat Bar */}
       <div
-        className="min-h-36 min-w-64 h-36 w-96 fixed -bottom-10 right-1/2 z-50"
         ref={chatBarRef}
+        onMouseDown={chatBarDrag}
+        className="min-h-36 min-w-64 h-36 w-96 fixed -bottom-10 right-1/2 z-50"
       >
-        <div
-          className="relative flex min-h-fit w-full shrink-0 space-x-2 rounded-3xl bg-[hsl(0,0,93)] shadow-md px-4 py-3 cursor-grab overflow-hidden"
-          onMouseDown={chatBarDrag}
-        >
+        <div className="relative flex min-h-fit w-full shrink-0 space-x-2 rounded-2xl bg-[hsl(0,0,93)] shadow-md px-4 py-3 cursor-grab overflow-hidden">
           <textarea
             onInput={(e) => setUserInput(e.currentTarget.value)}
             ref={textAreaRef}
@@ -166,7 +164,7 @@ function App() {
 
           {/* Resizer */}
           <div
-            className="bottom-0 right-0 cursor-nwse-resize rounded-r-full w-3 h-full absolute bg-gray-400 opacity-40"
+            className="bottom-0 right-0 cursor-ew-resize rounded-xl w-2 h-full absolute bg-gray-400 opacity-40"
             onMouseDown={(e) => {
               chatBarResize(e);
               e.stopPropagation();
