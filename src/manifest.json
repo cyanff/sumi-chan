@@ -15,6 +15,10 @@
     "scripting"
   ],
 
+  "host_permissions": [
+    "https://api.anthropic.com/*/*"
+  ],
+
   "web_accessible_resources": [
     {
       "resources": [ "app.tsx", "main.js"],
