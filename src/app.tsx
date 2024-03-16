@@ -16,6 +16,7 @@ function App({ defaultGhost }) {
   const [response, setResponse] = useState(
     "awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaw"
   );
+  const [emotion, setEmotion] = useState("neutral");  
 
   const handleInput = async (prompt: string) => {
     console.log(prompt);
@@ -23,19 +24,19 @@ function App({ defaultGhost }) {
     try {
       chrome.runtime.sendMessage(
         { action: "msg", prompt: prompt, context: context },
-        function (response) {
+        function (reply) {
           if (chrome.runtime.lastError) {
             console.error(chrome.runtime.lastError.message);
           } else {
-            console.log(response);
-            setResponse(response);
+            setResponse(reply.reply);
+            setEmotion(reply.emotion);
           }
         }
       );
     } catch (error) {
       console.error(error.message);
     }
-
+    console.log(response)
     setContext((prevMessages) => [
       ...prevMessages,
       { role: "user", content: prompt },
