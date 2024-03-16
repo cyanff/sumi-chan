@@ -1,12 +1,12 @@
 import { useCallback } from "react";
 
-export function useDraggable(overlayRef) {
+export function useDraggable(elementRef) {
   const handleHandler = useCallback(
     (e) => {
       e.preventDefault();
-      if (!overlayRef.current) return;
+      if (!elementRef.current) return;
 
-      const overlay = overlayRef.current;
+      const overlay = elementRef.current;
       const startX = e.clientX - overlay.offsetLeft;
       const startY = e.clientY - overlay.offsetTop;
 
@@ -23,17 +23,17 @@ export function useDraggable(overlayRef) {
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseup", onMouseUp);
     },
-    [overlayRef]
+    [elementRef]
   );
 
   return handleHandler;
 }
 
-export function useResizeable(overlayRef) {
+export function useResizeable(elementRef) {
   const resizeHandler = useCallback(
     (e) => {
       e.preventDefault();
-      const overlay = overlayRef.current;
+      const overlay = elementRef.current;
       const startX = e.clientX;
       const startY = e.clientY;
 
@@ -67,7 +67,7 @@ export function useResizeable(overlayRef) {
       };
       document.addEventListener("mouseup", onMouseUp);
     },
-    [overlayRef]
+    [elementRef]
   );
   return resizeHandler;
 }
