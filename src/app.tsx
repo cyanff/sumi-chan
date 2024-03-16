@@ -14,7 +14,6 @@ const SpeechBox = ({ children }: { children: React.ReactNode }) => (
     minHeight={10}
     bounds="window"
     className="relative bg-white text-gray-800 p-4 shadow-lg rounded-md"
-    className="relative bg-white text-gray-800 p-4 shadow-lg rounded-md"
   >
     {/* Speech */}
     <div className="h-full w-full break-words overflow-y-auto">{children}</div>
@@ -27,7 +26,6 @@ const SpeechBox = ({ children }: { children: React.ReactNode }) => (
   </Rnd>
 );
 
-const InputBox = ({ children }: { children: React.ReactNode }) => (
 const InputBox = ({ children }: { children: React.ReactNode }) => (
   <Rnd
     default={{
@@ -51,19 +49,12 @@ const InputField = ({
 }: {
   onSubmit: (inputText: string) => void;
 }) => {
-const InputField = ({
-  onSubmit,
-}: {
-  onSubmit: (inputText: string) => void;
-}) => {
   const [input, setInput] = useState("");
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       onSubmit(input);
@@ -154,7 +145,7 @@ const App = () => {
   const handleInputSubmit = async (inputText: string) => {
     console.log(inputText);
     try {
-      setSpeech("");  
+      setSpeech("");
       await getStream(inputText, (text) => {
         setSpeech(speech + text);
       });
