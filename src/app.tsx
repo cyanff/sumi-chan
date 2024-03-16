@@ -1,16 +1,41 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // @ts-ignore
 import globalCSS from "bundle-text:./global.css";
 import { useDraggable, useResizeable } from "./hooks";
 
 function App({ defaultGhost }) {
-  const overlayRef = useRef();
   const [overlayVisible, setOverlayVisible] = useState(true);
 
-  const handleDrag = useDraggable(overlayRef);
-  const handleResize = useResizeable(overlayRef);
+  const overlayRef = useRef();
+  const overlayDrag = useDraggable(overlayRef);
+  const overlayResize = useResizeable(overlayRef);
+
+  const chatBarRef = useRef();
+  const chatBarDrag = useDraggable(chatBarRef);
+  const chatBarResize = useResizeable(chatBarRef);
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [userInput, setUserInput] = useState("");
 
   const [ghost, setGhost] = useState(defaultGhost);
+
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
+      if (message.action === "show") {
+        setOverlayVisible(true);
+      }
+    });
+  }, []);
+
+  // Dynamic text area scaling
+  useEffect(() => {
+    const textarea = textAreaRef.current;
+    if (textarea == null) {
+      return;
+    }
+    textarea.style.height = "24px";
+    textarea.style.height = textarea.scrollHeight + "px";
+  }, [userInput]);
 
   const [context, setContext] = useState([]);
   const [response, setResponse] = useState(
@@ -49,14 +74,19 @@ function App({ defaultGhost }) {
       <style>{globalCSS}</style>
       <div
         ref={overlayRef}
-        className="absolute flex flex-col w-96 h-96 bg-neutral-100  text-gray-800 shadow-lg rounded-lg"
+        className={`fixed bottom-10 right-64 z-50 flex flex-col w-96 h-40 bg-neutral-100  text-gray-800 shadow-lg rounded-lg ${
+          overlayVisible ? "block" : "hidden"
+        }`}
       >
         {/* Drag handle */}
         <div
           className="flex justify-end items-center h-9 w-full bg-neutral-300 shrink-0 cursor-grab rounded-t-lg"
-          onMouseDown={handleDrag}
+          onMouseDown={overlayDrag}
         >
-          <button className="flex cursor-pointer justify-center items-center group size-fit mr-2">
+          <button
+            onClick={() => setOverlayVisible(false)}
+            className="flex cursor-pointer justify-center items-center group size-fit mr-2"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -85,8 +115,41 @@ function App({ defaultGhost }) {
         {/* Resizer */}
         <div
           className="bottom-0 right-0 cursor-nwse-resize rounded-br-2xl w-3 h-3 absolute bg-gray-600 opacity-40"
-          onMouseDown={handleResize}
+          onMouseDown={overlayResize}
         ></div>
+      </div>
+
+      {/* Chat Bar */}
+      <div
+        className="min-h-36 min-w-64 h-36 w-96 fixed -bottom-10 right-1/2 z-50"
+        ref={chatBarRef}
+        onMouseDown={chatBarDrag}
+      >
+        <div className="flex min-h-fit w-full shrink-0 space-x-2 rounded-3xl bg-[hsl(0,0,93)] shadow-md px-4 py-3">
+          <textarea
+            onInput={(e) => setUserInput(e.currentTarget.value)}
+            ref={textAreaRef}
+            maxLength={1024}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+              }
+            }}
+            value={userInput}
+            placeholder={`Ask any question!`}
+            className="scroll-primary h-6 max-h-36 w-full resize-none overflow-y-auto bg-inherit px-2 font-[430] leading-6 focus:outline-none"
+          />
+          {/* Send button */}
+          <button className="h-7 w-7 fill-neutral-400  transition duration-150 ease-out hover:fill-neutral-300">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="w-6 h-6"
+            >
+              <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+            </svg>
+          </button>
+        </div>
       </div>
     </>
   );
