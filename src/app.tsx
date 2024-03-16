@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 // @ts-ignore
 import globalCSS from "bundle-text:./global.css";
 
