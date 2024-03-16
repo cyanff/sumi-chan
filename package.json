@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-rnd": "^10.4.1",
+    "rnd": "^1.0.10"
   }
 }
