@@ -9,14 +9,11 @@ function App({ defaultGhost }) {
   const overlayRef = useRef();
   const overlayDrag = useDraggable(overlayRef);
   const overlayResize = useResizeable(overlayRef);
-
   const chatBarRef = useRef();
   const chatBarDrag = useDraggable(chatBarRef);
   const chatBarResize = useResizeable(chatBarRef);
-
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
-
   const [ghost, setGhost] = useState(defaultGhost);
 
   useEffect(() => {
@@ -73,15 +70,13 @@ function App({ defaultGhost }) {
       <style>{globalCSS}</style>
       <div
         ref={overlayRef}
-        className={`fixed bottom-10 right-64 z-50 flex flex-col w-96 h-40 bg-neutral-100  text-gray-800 shadow-lg rounded-lg ${
+        onMouseDown={overlayDrag}
+        className={`fixed  cursor-grab bottom-10 right-64 z-50 flex flex-col w-96 h-40 bg-neutral-100  text-gray-800 shadow-lg rounded-lg ${
           overlayVisible ? "block" : "hidden"
         }`}
       >
-        {/* Drag handle */}
-        <div
-          className="flex justify-end items-center h-9 w-full bg-neutral-300 shrink-0 cursor-grab rounded-t-lg"
-          onMouseDown={overlayDrag}
-        >
+        {/*Title bar*/}
+        <div className="flex justify-end items-center h-8 w-full bg-neutral-300 shrink-0 rounded-t-lg">
           <button
             onClick={() => setOverlayVisible(false)}
             className="flex cursor-pointer justify-center items-center group size-fit mr-2"
@@ -111,20 +106,28 @@ function App({ defaultGhost }) {
           className="min-w-24 w-56 absolute -bottom-0 -right-52 transform"
         />
 
-        {/* Resizer */}
+        {/* Resizer Hitbox*/}
         <div
-          className="bottom-0 right-0 cursor-nwse-resize rounded-br-2xl w-3 h-3 absolute bg-gray-600 opacity-40"
-          onMouseDown={overlayResize}
+          className="-bottom-1.5 -right-1.5 cursor-nwse-resize rounded-br-2xl w-6 h-6 absolute"
+          onMouseDown={(e) => {
+            overlayResize(e);
+            e.stopPropagation();
+          }}
         ></div>
+
+        {/* Resizer Display*/}
+        <div className="rounded-br-2xl bottom-0 right-0 pointer-events-none w-3 h-3 absolute bg-gray-600 opacity-40"></div>
       </div>
 
       {/* Chat Bar */}
       <div
         className="min-h-36 min-w-64 h-36 w-96 fixed -bottom-10 right-1/2 z-50"
         ref={chatBarRef}
-        onMouseDown={chatBarDrag}
       >
-        <div className="flex min-h-fit w-full shrink-0 space-x-2 rounded-3xl bg-[hsl(0,0,93)] shadow-md px-4 py-3">
+        <div
+          className="relative flex min-h-fit w-full shrink-0 space-x-2 rounded-3xl bg-[hsl(0,0,93)] shadow-md px-4 py-3 cursor-grab overflow-hidden"
+          onMouseDown={chatBarDrag}
+        >
           <textarea
             onInput={(e) => setUserInput(e.currentTarget.value)}
             ref={textAreaRef}
@@ -136,10 +139,11 @@ function App({ defaultGhost }) {
             }}
             value={userInput}
             placeholder={`Ask any question!`}
-            className="scroll-primary h-6 max-h-36 w-full resize-none overflow-y-auto bg-inherit px-2 font-[430] leading-6 focus:outline-none"
+            onMouseDown={(e) => e.stopPropagation()}
+            className="scroll-primary h-6 max-h-36 w-full resize-none overflow-y-auto bg-inherit px-2 font-[430] leading-6 focus:outline-none cursor-text"
           />
           {/* Send button */}
-          <button className="h-7 w-7 fill-neutral-400  transition duration-150 ease-out hover:fill-neutral-300">
+          <button className="h-7 w-7 ml-1.5 fill-neutral-400  transition duration-150 ease-out hover:fill-neutral-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -148,6 +152,15 @@ function App({ defaultGhost }) {
               <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
             </svg>
           </button>
+
+          {/* Resizer */}
+          <div
+            className="bottom-0 right-0 cursor-nwse-resize rounded-r-full w-3 h-full absolute bg-gray-400 opacity-40"
+            onMouseDown={(e) => {
+              chatBarResize(e);
+              e.stopPropagation();
+            }}
+          ></div>
         </div>
       </div>
     </>
