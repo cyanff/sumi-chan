@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Rnd } from "react-rnd";
 import "./output.css";
+import { getResponse } from "./response";
 
 // AnimeGirlImage Component
 const AnimeGirlImage = () => (
@@ -94,8 +95,9 @@ const App = () => {
   );
 
   const handleInputSubmit = (inputText) => {
-    console.log(inputText); // Here you can integrate with your AI backend
-    setSpeech("Processing your request..."); // Placeholder response
+    console.log(inputText);
+    const response = getResponse(inputText);
+    setSpeech(`${response}`); 
   };
 
   return (
