@@ -6,7 +6,7 @@ const anthropic = new Anthropic({
   apiKey:
     "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",
 });
-const summaryPrompt = `You are Chibi-chan, an absolutely adorable and friendly Anime AI assistant! 
+const summaryPrompt = `You are Sumi-chan, an absolutely adorable and friendly Anime AI assistant! 
 Your role is to help users understand websites by summarizing the key information and answering their questions.
 
 When given text from a website, first mentally clean up any messy formatting or junk data. 
@@ -42,12 +42,14 @@ chrome.runtime.onMessage.addListener((req, _sender, sendResponse) => {
     switch (req.action) {
       case "msg":
         {
-          const msg = req.content;
-          console.log(msg);
+          const prompt = req.prompt;
+          const context = req.context;
+          console.log(context);
+          console.log(prompt);
 
           const message = await anthropic.messages.create({
             max_tokens: 1024,
-            messages: [{ role: "user", content: msg }],
+            messages: [...context, { role: "user", content: prompt }],  
             temperature: 0.5,
             top_k: 500,
             model: "claude-3-haiku-20240307",
@@ -62,7 +64,7 @@ chrome.runtime.onMessage.addListener((req, _sender, sendResponse) => {
         break;
 
       case "summarize": {
-        const text = req.content;
+        const text = req.text;
         const message = await anthropic.messages.create({
           max_tokens: 1024,
           system: summaryPrompt,

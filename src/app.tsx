@@ -37,6 +37,37 @@ function App({ defaultGhost }) {
     textarea.style.height = textarea.scrollHeight + "px";
   }, [userInput]);
 
+  const [context, setContext] = useState([]);
+  const [response, setResponse] = useState(
+    "awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaw"
+  );
+
+  const handleInput = async (prompt: string) => {
+    console.log(prompt);
+
+    try {
+      chrome.runtime.sendMessage(
+        { action: "msg", prompt: prompt, context: context },
+        function (response) {
+          if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError.message);
+          } else {
+            console.log(response);
+            setResponse(response);
+          }
+        }
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
+
+    setContext((prevMessages) => [
+      ...prevMessages,
+      { role: "user", content: prompt },
+      { role: "assistant", content: response },
+    ]);
+  };
+
   return (
     <>
       <style>{globalCSS}</style>
