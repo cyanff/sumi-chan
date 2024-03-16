@@ -6,7 +6,6 @@ import { useDraggable, useResizeable } from "./hooks";
 function App() {
   const [overlayVisible, setOverlayVisible] = useState(true);
 
-  const apiKeyRef = useRef("");
 
   const overlayRef = useRef();
   const overlayDrag = useDraggable(overlayRef);
@@ -24,10 +23,6 @@ function App() {
       if (message.action === "show") {
         setOverlayVisible(true);
       }
-    });
-
-    chrome.storage.sync.get("apiKey", (data) => {
-      apiKeyRef.current = data.apiKey;
     });
   }, []);
 
