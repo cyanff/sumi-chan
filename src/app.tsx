@@ -64,9 +64,10 @@ function App() {
       prompt: prompt,
       context: context,
     });
-
+    console.log(context);
     setResponse(res.message);
     setEmotion(res.emotion);
+
     setContext((prevMessages) => [
       ...prevMessages,
       { role: "user", content: prompt },
@@ -106,7 +107,7 @@ function App() {
         </div>
 
         {/* Speech */}
-        <div className="grow break-words overflow-y-auto py-1 px-3">
+        <div className="grow break-words overflow-y-auto py-1 px-3 text-base">
           {response}
         </div>
         <img
@@ -148,7 +149,7 @@ function App() {
             value={userInput}
             placeholder={`Ask any question!`}
             onMouseDown={(e) => e.stopPropagation()}
-            className="scroll-primary h-6 max-h-36 w-full resize-none overflow-y-auto bg-inherit px-2 font-[430] leading-6 focus:outline-none cursor-text text-black"
+            className="scroll-primary h-6 max-h-36 w-full resize-none overflow-y-auto bg-inherit px-2 text-base leading-6 focus:outline-none cursor-text text-black"
           />
           {/* Send button */}
           <button
