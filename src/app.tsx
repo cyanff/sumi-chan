@@ -5,10 +5,43 @@ import { useDraggable, useResizeable } from "./hooks";
 
 function App({ defaultGhost }) {
   const overlayRef = useRef();
-  const [overlayVisible, setOverlayVisible]= useState(true); 
+  const [overlayVisible, setOverlayVisible] = useState(true);
+
   const handleDrag = useDraggable(overlayRef);
   const handleResize = useResizeable(overlayRef);
+
   const [ghost, setGhost] = useState(defaultGhost);
+
+  const [context, setContext] = useState([]);
+  const [response, setResponse] = useState(
+    "awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaw"
+  );
+
+  const handleInput = async (prompt: string) => {
+    console.log(prompt);
+
+    try {
+      chrome.runtime.sendMessage(
+        { action: "msg", prompt: prompt, context: context },
+        function (response) {
+          if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError.message);
+          } else {
+            console.log(response);
+            setResponse(response);
+          }
+        }
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
+
+    setContext((prevMessages) => [
+      ...prevMessages,
+      { role: "user", content: prompt },
+      { role: "assistant", content: response },
+    ]);
+  };
 
   return (
     <>
@@ -22,10 +55,7 @@ function App({ defaultGhost }) {
           className="flex justify-end items-center h-9 w-full bg-neutral-300 shrink-0 cursor-grab rounded-t-lg"
           onMouseDown={handleDrag}
         >
-          <button 
-          onClick={()}
-          
-          className="flex cursor-pointer justify-center items-center group size-fit mr-2">
+          <button className="flex cursor-pointer justify-center items-center group size-fit mr-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
