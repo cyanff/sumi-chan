@@ -6,12 +6,16 @@ import { useDraggable, useResizeable } from "./hooks";
 function App({ defaultGhost }) {
   const [overlayVisible, setOverlayVisible] = useState(true);
 
+  const apiKeyRef = useRef("");
+
   const overlayRef = useRef();
   const overlayDrag = useDraggable(overlayRef);
   const overlayResize = useResizeable(overlayRef);
+
   const chatBarRef = useRef();
   const chatBarDrag = useDraggable(chatBarRef);
   const chatBarResize = useResizeable(chatBarRef);
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
   const [ghost, setGhost] = useState(defaultGhost);
@@ -21,6 +25,10 @@ function App({ defaultGhost }) {
       if (message.action === "show") {
         setOverlayVisible(true);
       }
+    });
+
+    chrome.storage.sync.get("apiKey", (data) => {
+      apiKeyRef.current = data.apiKey;
     });
   }, []);
 
@@ -45,11 +53,11 @@ function App({ defaultGhost }) {
     pout: "/path/to/angry.png",
     curious: "/path/to/curious.png",
     panic: "/path/to/panic.png",
-    scared: "/path/to/scared.png",  
+    scared: "/path/to/scared.png",
     cry: "/path/to/cry.png",
     neutral: "/path/to/neutral.png",
   };
-  
+
   const handleInput = async (prompt: string) => {
     console.log(prompt);
 
@@ -166,7 +174,7 @@ function App({ defaultGhost }) {
 
           {/* Resizer */}
           <div
-            className="bottom-0 right-0 cursor-nwse-resize rounded-r-full w-3 h-full absolute bg-gray-400 opacity-40"
+            className="bottom-0 right-0 cursor-se-resize rounded-r-full w-3 h-full absolute bg-gray-400 opacity-40"
             onMouseDown={(e) => {
               chatBarResize(e);
               e.stopPropagation();

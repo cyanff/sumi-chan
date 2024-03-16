@@ -12,12 +12,17 @@
   },
    "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "storage"
   ],
 
   "host_permissions": [
     "https://api.anthropic.com/*/*"
   ],
+
+  "options_ui": {
+    "page": "./options.html"
+  },
 
   "web_accessible_resources": [
     {
