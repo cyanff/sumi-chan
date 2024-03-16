@@ -6,12 +6,16 @@ import { useDraggable, useResizeable } from "./hooks";
 function App() {
   const [overlayVisible, setOverlayVisible] = useState(true);
 
+  const apiKeyRef = useRef("");
+
   const overlayRef = useRef();
   const overlayDrag = useDraggable(overlayRef);
   const overlayResize = useResizeable(overlayRef);
+
   const chatBarRef = useRef();
   const chatBarDrag = useDraggable(chatBarRef);
   const chatBarResize = useResizeable(chatBarRef);
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
 
@@ -20,6 +24,10 @@ function App() {
       if (message.action === "show") {
         setOverlayVisible(true);
       }
+    });
+
+    chrome.storage.sync.get("apiKey", (data) => {
+      apiKeyRef.current = data.apiKey;
     });
   }, []);
 
