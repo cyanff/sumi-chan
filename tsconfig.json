@@ -6,7 +6,8 @@
      "jsx": "react",
      "lib": ["ES2015", "DOM"],
      "skipLibCheck": true,
-     "esModuleInterop": true
+     "esModuleInterop": true,
+     "noUnusedLocals": false
   }
 }
 
