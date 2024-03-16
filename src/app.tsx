@@ -1,21 +1,8 @@
 import React, { useState } from "react";
 import { Rnd } from "react-rnd";
-import "./output.css";
-import { getResponse } from "./response";
+import { getStream } from "./response";
 
-// AnimeGirlImage Component
-const AnimeGirlImage = () => (
-  <div>
-    <img
-      src={"/mascot.png"}
-      alt="Description of image"
-      style={{ width: "200px", height: "230px" }}
-    />
-  </div>
-);
-
-// SpeechBox Component
-const SpeechBox = ({ children }) => (
+const SpeechBox = ({ children }: { children: React.ReactNode }) => (
   <Rnd
     default={{
       x: 0,
@@ -26,23 +13,20 @@ const SpeechBox = ({ children }) => (
     minWidth={10}
     minHeight={10}
     bounds="window"
-    className="speech-box bg-white text-gray-800 p-4 shadow-lg rounded-md"
+    className="relative bg-white text-gray-800 p-4 shadow-lg rounded-md"
   >
-    <div className="flex flex-row justify-end items-center">
-      <div
-        className="w-full"
-        style={{ wordWrap: "break-word", overflowWrap: "break-word" }}
-      >
-        {children}
-      </div>
-      <div style={{ width: "200px", height: "230px", flexShrink: "0" }}>
-        <AnimeGirlImage />
-      </div>
-    </div>
+    {/* Speech */}
+    <div className="h-full w-full break-words overflow-y-auto">{children}</div>
+
+    <img
+      src={"/mascot.png"}
+      alt="Description of image"
+      className="min-w-24 w-56 absolute -bottom-0 -right-52 transform pointer-events-none"
+    />
   </Rnd>
 );
 
-const InputBox = ({ children }) => (
+const InputBox = ({ children }: { children: React.ReactNode }) => (
   <Rnd
     default={{
       x: 0,
@@ -60,14 +44,18 @@ const InputBox = ({ children }) => (
 );
 
 // InputField Component
-const InputField = ({ onSubmit }) => {
+const InputField = ({
+  onSubmit,
+}: {
+  onSubmit: (inputText: string) => void;
+}) => {
   const [input, setInput] = useState("");
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       onSubmit(input);
       setInput("");
@@ -94,14 +82,20 @@ const App = () => {
     "awawawawawawawawaawawawawawawawawaawawawawawawawawaawawawawawawawawaawawawawawawawawaawawawawawawawawaawawawawawawawawaawawawawawawawawaawawawawawawawawa"
   );
 
-  const handleInputSubmit = (inputText) => {
+  const handleInputSubmit = async (inputText: string) => {
     console.log(inputText);
-    const response = getResponse(inputText);
-    setSpeech(`${response}`); 
+    try {
+      setSpeech("");  
+      await getStream(inputText, (text) => {
+        setSpeech(speech + text);
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div className="app bg-gray-100 min-h-screen flex justify-center items-center">
+    <div className="app bg-gray-100 h-screen w-screen flex justify-center items-center">
       <SpeechBox>{speech}</SpeechBox>
       <InputBox>
         <InputField onSubmit={handleInputSubmit} />
