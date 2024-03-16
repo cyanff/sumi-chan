@@ -1,16 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-// TODO change this to chrome persistant storage
-// Ask for the API key
-
-let apiKeyString;
-chrome.storage.sync.get("apiKey", (data) => {
-  apiKeyString = data.apiKey;
-});
-const anthropic = new Anthropic({
-  apiKey: apiKeyString,
-});
-
 const summaryPrompt = `You are Sumi-chan, an absolutely adorable and friendly Anime AI assistant! 
 Your role is to help users understand websites by summarizing the key information and answering their questions.
 
@@ -52,9 +41,13 @@ chrome.action.onClicked.addListener(async (tab) => {
   return true;
 });
 
-// TODO API error handling
 chrome.runtime.onMessage.addListener((req, _sender, sendReply) => {
   (async () => {
+    const data = await chrome.storage.sync.get("apiKey");
+    let anthropic = new Anthropic({
+      apiKey: data.apiKey,
+    });
+
     switch (req.action) {
       case "msg":
         {

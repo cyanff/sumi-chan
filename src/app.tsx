@@ -6,7 +6,6 @@ import { useDraggable, useResizeable } from "./hooks";
 function App() {
   const [overlayVisible, setOverlayVisible] = useState(true);
 
-
   const overlayRef = useRef();
   const overlayDrag = useDraggable(overlayRef);
   const overlayResize = useResizeable(overlayRef);
@@ -36,6 +35,8 @@ function App() {
     textarea.style.height = textarea.scrollHeight + "px";
   }, [userInput]);
 
+  useEffect(() => {}, []);
+
   const [context, setContext] = useState([]);
   const [response, setResponse] = useState(
     "awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaw"
@@ -51,31 +52,27 @@ function App() {
     neutral: chrome.runtime.getURL("ghost_neutral.png"),
   };
 
-  const handleInput = async (prompt: string) => {
+  async function sendMessage() {
+    const prompt = userInput;
+    if (!prompt) return;
+
+    setUserInput("");
     console.log(prompt);
 
-    try {
-      chrome.runtime.sendMessage(
-        { action: "msg", prompt: prompt, context: context },
-        function (reply) {
-          if (chrome.runtime.lastError) {
-            console.error(chrome.runtime.lastError.message);
-          } else {
-            setResponse(reply.reply);
-            setEmotion(reply.emotion);
-          }
-        }
-      );
-    } catch (error) {
-      console.error(error.message);
-    }
-    console.log(response);
+    const res = await chrome.runtime.sendMessage({
+      action: "msg",
+      prompt: prompt,
+      context: context,
+    });
+
+    setResponse(res.message);
+    setEmotion(res.emotion);
     setContext((prevMessages) => [
       ...prevMessages,
       { role: "user", content: prompt },
-      { role: "assistant", content: response },
+      { role: "assistant", content: res.message },
     ]);
-  };
+  }
 
   return (
     <>
@@ -145,8 +142,7 @@ function App() {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
-                handleInput(userInput);
-                setUserInput("");
+                sendMessage();
               }
             }}
             value={userInput}
@@ -155,7 +151,10 @@ function App() {
             className="scroll-primary h-6 max-h-36 w-full resize-none overflow-y-auto bg-inherit px-2 font-[430] leading-6 focus:outline-none cursor-text text-black"
           />
           {/* Send button */}
-          <button className="h-7 w-7 ml-1.5 fill-neutral-400  transition duration-150 ease-out hover:fill-neutral-300">
+          <button
+            className="h-7 w-7 ml-1.5 fill-neutral-400  transition duration-150 ease-out hover:fill-neutral-300"
+            onClick={sendMessage}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
