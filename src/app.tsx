@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import globalCSS from "bundle-text:./global.css";
 import { useDraggable, useResizeable } from "./hooks";
 
-function App({ defaultGhost }) {
+function App() {
   const [overlayVisible, setOverlayVisible] = useState(true);
 
   const overlayRef = useRef();
@@ -14,7 +14,6 @@ function App({ defaultGhost }) {
   const chatBarResize = useResizeable(chatBarRef);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
-  const [ghost, setGhost] = useState(defaultGhost);
 
   useEffect(() => {
     chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
@@ -40,16 +39,15 @@ function App({ defaultGhost }) {
   );
   const [emotion, setEmotion] = useState("neutral");
   const emotionImages = {
-    happy: "/path/to/happy.png",
-    sad: "/path/to/sad.png",
-    pout: "/path/to/angry.png",
-    curious: "/path/to/curious.png",
-    panic: "/path/to/panic.png",
-    scared: "/path/to/scared.png",  
-    cry: "/path/to/cry.png",
-    neutral: "/path/to/neutral.png",
+    happy: chrome.runtime.getURL("ghost_happy.png"),
+    sad: chrome.runtime.getURL("ghost_sad.png"),
+    pout: chrome.runtime.getURL("ghost_pout.png"),
+    curious: chrome.runtime.getURL("ghost_curious.png"),
+    panic: chrome.runtime.getURL("ghost_panic.png"),
+    cry: chrome.runtime.getURL("ghost_cry.png"),
+    neutral: chrome.runtime.getURL("ghost_neutral.png"),
   };
-  
+
   const handleInput = async (prompt: string) => {
     console.log(prompt);
 
@@ -112,7 +110,7 @@ function App({ defaultGhost }) {
           Some speech here
         </div>
         <img
-          src={defaultGhost}
+          src={emotionImages[emotion]}
           alt="Mascot"
           className="min-w-24 w-56 absolute -bottom-0 -right-52 transform"
         />
@@ -146,12 +144,14 @@ function App({ defaultGhost }) {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
+                handleInput(userInput);
+                setUserInput("");
               }
             }}
             value={userInput}
             placeholder={`Ask any question!`}
             onMouseDown={(e) => e.stopPropagation()}
-            className="scroll-primary h-6 max-h-36 w-full resize-none overflow-y-auto bg-inherit px-2 font-[430] leading-6 focus:outline-none cursor-text"
+            className="scroll-primary h-6 max-h-36 w-full resize-none overflow-y-auto bg-inherit px-2 font-[430] leading-6 focus:outline-none cursor-text text-black"
           />
           {/* Send button */}
           <button className="h-7 w-7 ml-1.5 fill-neutral-400  transition duration-150 ease-out hover:fill-neutral-300">
