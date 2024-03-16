@@ -41,8 +41,18 @@ function App({ defaultGhost }) {
   const [response, setResponse] = useState(
     "awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaw"
   );
-  const [emotion, setEmotion] = useState("neutral");  
-
+  const [emotion, setEmotion] = useState("neutral");
+  const emotionImages = {
+    happy: "/path/to/happy.png",
+    sad: "/path/to/sad.png",
+    pout: "/path/to/angry.png",
+    curious: "/path/to/curious.png",
+    panic: "/path/to/panic.png",
+    scared: "/path/to/scared.png",  
+    cry: "/path/to/cry.png",
+    neutral: "/path/to/neutral.png",
+  };
+  
   const handleInput = async (prompt: string) => {
     console.log(prompt);
 
@@ -61,7 +71,7 @@ function App({ defaultGhost }) {
     } catch (error) {
       console.error(error.message);
     }
-    console.log(response)
+    console.log(response);
     setContext((prevMessages) => [
       ...prevMessages,
       { role: "user", content: prompt },
