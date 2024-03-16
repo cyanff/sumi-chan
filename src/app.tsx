@@ -73,7 +73,7 @@ function App({ defaultGhost }) {
       <style>{globalCSS}</style>
       <div
         ref={overlayRef}
-        className={`absolute bottom-10 right-64 z-50 flex flex-col w-96 h-40 bg-neutral-100  text-gray-800 shadow-lg rounded-lg ${
+        className={`fixed bottom-10 right-64 z-50 flex flex-col w-96 h-40 bg-neutral-100  text-gray-800 shadow-lg rounded-lg ${
           overlayVisible ? "block" : "hidden"
         }`}
       >
@@ -120,7 +120,7 @@ function App({ defaultGhost }) {
 
       {/* Chat Bar */}
       <div
-        className="min-h-36 min-w-64 h-36 w-96 absolute -bottom-10 right-1/2 z-50"
+        className="min-h-36 min-w-64 h-36 w-96 fixed -bottom-10 right-1/2 z-50"
         ref={chatBarRef}
         onMouseDown={chatBarDrag}
       >
