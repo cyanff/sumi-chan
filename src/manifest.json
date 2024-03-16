@@ -26,7 +26,7 @@
 
   "web_accessible_resources": [
     {
-      "resources": [ "app.tsx", "main.js", "ghost.png"],
+      "resources": [ "app.tsx", "main.js", "ghost_neutral.png"],
       "matches": [ "<all_urls>" ]
     } 
   ]

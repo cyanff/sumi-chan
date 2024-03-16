@@ -17,5 +17,4 @@ document.body.appendChild(wrap);
 // document.head.appendChild(fontsStyleSheet);
 // fontsStyleSheet.sheet.insertRule(fontsCSS, 0);
 
-const ghostPath = chrome.runtime.getURL("ghost.png")
-ReactDOM.render(<App defaultGhost={ghostPath} />, sr);
+ReactDOM.render(<App/>, sr);
