@@ -38,26 +38,37 @@ function App({ defaultGhost }) {
   const [response, setResponse] = useState(
     "awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaw"
   );
-
+  const [emotion, setEmotion] = useState("neutral");
+  const emotionImages = {
+    happy: "/path/to/happy.png",
+    sad: "/path/to/sad.png",
+    pout: "/path/to/angry.png",
+    curious: "/path/to/curious.png",
+    panic: "/path/to/panic.png",
+    scared: "/path/to/scared.png",  
+    cry: "/path/to/cry.png",
+    neutral: "/path/to/neutral.png",
+  };
+  
   const handleInput = async (prompt: string) => {
     console.log(prompt);
 
     try {
       chrome.runtime.sendMessage(
         { action: "msg", prompt: prompt, context: context },
-        function (response) {
+        function (reply) {
           if (chrome.runtime.lastError) {
             console.error(chrome.runtime.lastError.message);
           } else {
-            console.log(response);
-            setResponse(response);
+            setResponse(reply.reply);
+            setEmotion(reply.emotion);
           }
         }
       );
     } catch (error) {
       console.error(error.message);
     }
-
+    console.log(response);
     setContext((prevMessages) => [
       ...prevMessages,
       { role: "user", content: prompt },
