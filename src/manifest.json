@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "hackathon",
+  "description": "extension",
+  "version": "0.0.1",
+  "background": {
+    "service_worker": "background.ts",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "hackathon"   
+  },
+   "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [ "app.tsx", "main.js"],
+      "matches": [ "<all_urls>" ]
+    } 
+  ]
+}
+
