@@ -75,13 +75,14 @@ function App() {
   );
   const [emotion, setEmotion] = useState("neutral");
   const emotionImages = {
-    happy: chrome.runtime.getURL("ghost_happy.png"),
-    sad: chrome.runtime.getURL("ghost_sad.png"),
-    pout: chrome.runtime.getURL("ghost_pout.png"),
-    curious: chrome.runtime.getURL("ghost_curious.png"),
-    panic: chrome.runtime.getURL("ghost_panic.png"),
-    cry: chrome.runtime.getURL("ghost_cry.png"),
-    neutral: chrome.runtime.getURL("ghost_neutral.png"),
+    happy: chrome.runtime.getURL("sumi_happy.png"),
+    sad: chrome.runtime.getURL("sumi_sad.png"),
+    pout: chrome.runtime.getURL("sumi_pout.png"),
+    curious: chrome.runtime.getURL("sumi_curious.png"),
+    panic: chrome.runtime.getURL("sumi_panic.png"),
+    cry: chrome.runtime.getURL("sumi_cry.png"),
+    disgust: chrome.runtime.getURL("sumi_disgust.png"),
+    neutral: chrome.runtime.getURL("sumi_neutral.png"),
   };
 
   async function sendMessage() {
@@ -119,7 +120,7 @@ function App() {
         }`}
       >
         {/*Title bar*/}
-        <div className="flex justify-end items-center h-8 w-full bg-neutral-300 shrink-0 rounded-t-2xl">
+        <div className="flex justify-end items-center h-8 w-full bg-gradient-light-blue shrink-0 rounded-t-2xl">
           <button
             onClick={() => setOverlayVisible(false)}
             className="flex cursor-pointer justify-center items-center group size-fit mr-2"
@@ -186,7 +187,7 @@ function App() {
           />
           {/* Send button */}
           <button
-            className="h-7 w-7 ml-1.5 fill-neutral-400  transition duration-150 ease-out hover:fill-neutral-300"
+            className="h-7 w-7 ml-1.5 fill-neutral-300  transition duration-150 ease-out hover:fill-neutral-400"
             onClick={sendMessage}
           >
             <svg
