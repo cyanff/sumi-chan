@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 // @ts-ignore
 import globalCSS from "bundle-text:./global.css";
 import { useDraggable, useResizeable } from "./hooks";
+import { Readability } from "@mozilla/readability";
 
 function App() {
   const [overlayVisible, setOverlayVisible] = useState(true);
@@ -16,6 +17,8 @@ function App() {
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
+
+  const [imgLoading, setImgLoading] = useState(false);
 
   useEffect(() => {
     chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
@@ -35,11 +38,65 @@ function App() {
     textarea.style.height = textarea.scrollHeight + "px";
   }, [userInput]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    (async () => {
+      let doc = document.cloneNode(true) as Document;
+      let parsed = new Readability(doc).parse();
+
+      const res = await chrome.runtime.sendMessage({
+        action: "summarize",
+        text: parsed.textContent,
+      });
+
+      fadeInResponse(res.message);
+      fadeInEmotion(res.emotion);
+
+      setContext((prevMessages) => [
+        ...prevMessages,
+        { role: "user", content: parsed.textContent },
+        { role: "assistant", content: res.message },
+      ]);
+    })();
+  }, []);
+
+  function fadeInResponse(response: string) {
+    // split the response into words
+    const words = response.split(" ");
+    setResponse("");
+
+    for (let i = 0; i < words.length; i++) {
+      setTimeout(() => {
+        setResponse((prev) => prev + " " + words[i]);
+      }, 30 * i);
+    }
+  }
+
+  function fadeInEmotion(rawEmotionText: string) {
+    const emotions = [
+      "happy",
+      "sad",
+      "pout",
+      "curious",
+      "panic",
+      "disgust",
+      "neutral",
+    ];
+
+    let emotion = rawEmotionText.toLowerCase().trim();
+    if (!emotions.includes(emotion)) {
+      emotion = "neutral";
+    }
+
+    setEmotion(emotion);
+    setImgLoading(true);
+    setTimeout(() => {
+      setImgLoading(false);
+    }, 200);
+  }
 
   const [context, setContext] = useState([]);
   const [response, setResponse] = useState(
-    "awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaw"
+    "...sumi-chan using all her brain cells to summarize for you!"
   );
   const [emotion, setEmotion] = useState("neutral");
   const emotionImages = {
@@ -59,14 +116,15 @@ function App() {
     setUserInput("");
     console.log(prompt);
 
+    setResponse("the electrons in sumi-chan's brain are working hard!");
     const res = await chrome.runtime.sendMessage({
       action: "msg",
       prompt: prompt,
       context: context,
     });
-    console.log(context);
-    setResponse(res.message);
-    setEmotion(res.emotion);
+
+    fadeInResponse(res.message);
+    fadeInEmotion(res.emotion);
 
     setContext((prevMessages) => [
       ...prevMessages,
@@ -113,7 +171,9 @@ function App() {
         <img
           src={emotionImages[emotion]}
           alt="Mascot"
-          className="min-w-24 w-56 absolute -bottom-0 -right-52 transform"
+          className={`min-w-24 w-56 absolute -bottom-0 -right-52 transition duration-300 ease-out ${
+            imgLoading ? "opacity-0" : "opacity-100"
+          }`}
         />
 
         {/* Resizer Hitbox*/}
@@ -126,7 +186,7 @@ function App() {
         ></div>
 
         {/* Resizer Display*/}
-        <div className="rounded-br-2xl bottom-0 right-0 pointer-events-none w-3 h-3 rounded-xl absolute bg-gray-600 opacity-40"></div>
+        <div className="rounded-br-2xl rounded-tl-sm bottom-0 right-0 pointer-events-none w-3 h-3 absolute bg-gray-600 opacity-40"></div>
       </div>
 
       {/* Chat Bar */}
