@@ -16,7 +16,7 @@ Sumi-chan could even answer any question you throw her way after summarizing the
 
 - **Interactive Q&A**: After summarizing the page, you can ask Sumi-chan any question related to the content, and she'll provide you with a detailed and informative response, all while maintaining her adorable persona.
 
-- **Short-term memory**: Sumi-chan has short-term memory loss :3 She has memory of the active chat window! But if you refresh the page, it'll wipe her memory!
+- **Short-term memory**: Sumi-chan has short-term memory loss >///< She has memory of the active chat window! But if you refresh the page, it'll wipe her memory!
 
 - **Expressive Animations**: Sumi-chan isn't just a disembodied voice – she's a fully animated character with a wide range of expressions that will change based on the context of your conversation. Get ready for some serious kawaii overload!
 
