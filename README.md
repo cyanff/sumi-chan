@@ -9,6 +9,8 @@ With just a click of the extension icon, Sumi-chan will appear and summarize the
 
 Sumi-chan could even answer any question you throw her way after summarizing the page. And the best part? She'll change her expressions as you chat with her, making every interaction feel like a heartwarming conversation with your favorite anime character! (◡‿◡✿)
 
+made by: cyan, snavu
+
 ## Features
 ![sumi_demo](https://github.com/cyanff/hackathon/assets/42996044/942eb3b2-e437-4061-ae21-7ccac014805e)
 
