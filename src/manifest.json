@@ -26,9 +26,8 @@
 
   "web_accessible_resources": [
     {
-      "resources": [ "app.tsx", "main.js", "ghost_neutral.png"],
+      "resources": [ "app.tsx", "main.js", "sumi_neutral.png","sumi_happy.png", "sumi_sad.png", "sumi_curious.png", "sumi_pout.png", "sumi_panic.png", "sumi_disgust.png"],
       "matches": [ "<all_urls>" ]
     } 
   ]
 }
-

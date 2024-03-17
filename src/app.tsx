@@ -48,7 +48,6 @@ function App() {
     pout: chrome.runtime.getURL("sumi_pout.png"),
     curious: chrome.runtime.getURL("sumi_curious.png"),
     panic: chrome.runtime.getURL("sumi_panic.png"),
-    cry: chrome.runtime.getURL("sumi_cry.png"),
     disgust: chrome.runtime.getURL("sumi_disgust.png"),
     neutral: chrome.runtime.getURL("sumi_neutral.png"),
   };

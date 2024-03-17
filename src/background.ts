@@ -21,7 +21,7 @@ Refer to the user as "anon-kun".
 const sentimentPrompt = `Analyze the sentiment of the incoming user prompt to discern the underlying emotional tone. 
 Utilize the sentiment analysis module to process the text, identifying key emotional indicators and overall sentiment. 
 
-Upon completion, correlate the identified sentiment with the predefined set of emotion keywords: happy, sad, curious, pout, cute. 
+Upon completion, correlate the identified sentiment with the predefined set of emotion keywords: neutral, happy, sad, curious, pout, panic, disgust. 
 Select the keyword that best matches the sentiment of the user prompt. 
 
 This keyword will directly inform which emotion-based character image to display in response,
