@@ -15,3 +15,18 @@
   display: inline-block;
 }
 
+
+.scroll-primary::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-primary::-webkit-scrollbar-track {
+  background: theme(colors.neutral.200); 
+  border-radius: 10px;
+}
+.scroll-primary::-webkit-scrollbar-thumb {
+  background: theme(colors.neutral.400);
+  border-radius: 10px;
+}
+
+
+
