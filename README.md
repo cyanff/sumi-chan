@@ -1,4 +1,5 @@
 # ☁️ Sumi-chan: Your Kawaiiii AI Summarization Assistant ☁️
+![sumi](https://github.com/cyanff/hackathon/assets/42996044/8dc84eee-7860-4ee7-80c4-cb4998a61e67)
 
 ## The Cutest Way to Summarize Webpages!
 
@@ -9,10 +10,13 @@ With just a click of the extension icon, Sumi-chan will appear and summarize the
 Sumi-chan could even answer any question you throw her way after summarizing the page. And the best part? She'll change her expressions as you chat with her, making every interaction feel like a heartwarming conversation with your favorite anime character! (◡‿◡✿)
 
 ## Features
+![sumi_demo](https://github.com/cyanff/hackathon/assets/42996044/942eb3b2-e437-4061-ae21-7ccac014805e)
 
 - **Instant Page Summarization**: No more wasting time reading through walls of text! Sumi-chan will summarize any webpage at the click of a button, giving you the key points in a concise and easy-to-understand way.
 
 - **Interactive Q&A**: After summarizing the page, you can ask Sumi-chan any question related to the content, and she'll provide you with a detailed and informative response, all while maintaining her adorable persona.
+
+- **Short-term memory**: Sumi-chan has short-term memory loss :3 She has memory of the active chat window! But if you refresh the page, it'll wipe her memory!
 
 - **Expressive Animations**: Sumi-chan isn't just a disembodied voice – she's a fully animated character with a wide range of expressions that will change based on the context of your conversation. Get ready for some serious kawaii overload!
 
