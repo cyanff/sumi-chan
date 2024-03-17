@@ -18,7 +18,7 @@ Sumi-chan could even answer any question you throw her way after summarizing the
 
 - **Short-term memory**: Sumi-chan has short-term memory loss >///< She has memory of the active chat window! But if you refresh the page, it'll wipe her memory!
 
-- **Expressive Animations**: Sumi-chan isn't just a disembodied text – she's a fully animated character with a wide range of expressions that will change based on the context of your conversation!
+- **Expressive Animations**: Sumi-chan isn't just a disembodied text – she's an animated character with a wide range of expressions that will change based on the context of your conversation!
 
 
 ## Installation
