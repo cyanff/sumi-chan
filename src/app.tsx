@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 // @ts-ignore
 import globalCSS from "bundle-text:./global.css";
 import { useDraggable, useResizeable } from "./hooks";
+import { Readability } from "@mozilla/readability";
 
 function App() {
   const [overlayVisible, setOverlayVisible] = useState(true);
@@ -35,11 +36,42 @@ function App() {
     textarea.style.height = textarea.scrollHeight + "px";
   }, [userInput]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    (async () => {
+      let doc = document.cloneNode(true) as Document;
+      let parsed = new Readability(doc).parse();
+
+      const res = await chrome.runtime.sendMessage({
+        action: "summarize",
+        text: parsed.textContent,
+      });
+
+      fadeInResponse(res.message);
+      setEmotion(res.emotion);
+
+      setContext((prevMessages) => [
+        ...prevMessages,
+        { role: "user", content: parsed.textContent },
+        { role: "assistant", content: res.message },
+      ]);
+    })();
+  }, []);
+
+  function fadeInResponse(response: string) {
+    // split the response into words
+    const words = response.split(" ");
+    setResponse("");
+
+    for (let i = 0; i < words.length; i++) {
+      setTimeout(() => {
+        setResponse((prev) => prev + " " + words[i]);
+      }, 30 * i);
+    }
+  }
 
   const [context, setContext] = useState([]);
   const [response, setResponse] = useState(
-    "awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaw"
+    "...sumi-chan using all her brain cells to summarize for you!"
   );
   const [emotion, setEmotion] = useState("neutral");
   const emotionImages = {
@@ -59,13 +91,14 @@ function App() {
     setUserInput("");
     console.log(prompt);
 
+    setResponse("the electrons in sumi-chan's brain are working hard!");
     const res = await chrome.runtime.sendMessage({
       action: "msg",
       prompt: prompt,
       context: context,
     });
-    console.log(context);
-    setResponse(res.message);
+
+    fadeInResponse(res.message);
     setEmotion(res.emotion);
 
     setContext((prevMessages) => [
@@ -126,7 +159,7 @@ function App() {
         ></div>
 
         {/* Resizer Display*/}
-        <div className="rounded-br-2xl bottom-0 right-0 pointer-events-none w-3 h-3 rounded-xl absolute bg-gray-600 opacity-40"></div>
+        <div className="rounded-br-2xl rounded-tl-sm bottom-0 right-0 pointer-events-none w-3 h-3 absolute bg-gray-600 opacity-40"></div>
       </div>
 
       {/* Chat Bar */}
