@@ -18,6 +18,8 @@ function App() {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
 
+  const [imgLoading, setImgLoading] = useState(false);
+
   useEffect(() => {
     chrome.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
       if (message.action === "show") {
@@ -47,7 +49,7 @@ function App() {
       });
 
       fadeInResponse(res.message);
-      setEmotion(res.emotion);
+      fadeInEmotion(res.emotion);
 
       setContext((prevMessages) => [
         ...prevMessages,
@@ -69,6 +71,29 @@ function App() {
     }
   }
 
+  function fadeInEmotion(rawEmotionText: string) {
+    const emotions = [
+      "happy",
+      "sad",
+      "pout",
+      "curious",
+      "panic",
+      "disgust",
+      "neutral",
+    ];
+
+    let emotion = rawEmotionText.toLowerCase().trim();
+    if (!emotions.includes(emotion)) {
+      emotion = "neutral";
+    }
+
+    setEmotion(emotion);
+    setImgLoading(true);
+    setTimeout(() => {
+      setImgLoading(false);
+    }, 200);
+  }
+
   const [context, setContext] = useState([]);
   const [response, setResponse] = useState(
     "...sumi-chan using all her brain cells to summarize for you!"
@@ -80,7 +105,6 @@ function App() {
     pout: chrome.runtime.getURL("sumi_pout.png"),
     curious: chrome.runtime.getURL("sumi_curious.png"),
     panic: chrome.runtime.getURL("sumi_panic.png"),
-    cry: chrome.runtime.getURL("sumi_cry.png"),
     disgust: chrome.runtime.getURL("sumi_disgust.png"),
     neutral: chrome.runtime.getURL("sumi_neutral.png"),
   };
@@ -100,7 +124,7 @@ function App() {
     });
 
     fadeInResponse(res.message);
-    setEmotion(res.emotion);
+    fadeInEmotion(res.emotion);
 
     setContext((prevMessages) => [
       ...prevMessages,
@@ -147,7 +171,9 @@ function App() {
         <img
           src={emotionImages[emotion]}
           alt="Mascot"
-          className="min-w-24 w-56 absolute -bottom-0 -right-52 transform"
+          className={`min-w-24 w-56 absolute -bottom-0 -right-52 transition duration-300 ease-out ${
+            imgLoading ? "opacity-0" : "opacity-100"
+          }`}
         />
 
         {/* Resizer Hitbox*/}
