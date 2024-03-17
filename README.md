@@ -24,11 +24,13 @@ Sumi-chan could even answer any question you throw her way after summarizing the
 ## Installation
 
 1. Simply clone this github repo.
-2. Run `npm i`
-3. Build the project! `npm run build`
+2. Run `npm i`.
+3. Build the project! `npm run build`.
 4. In chrome, navigate to `manage extension`
-5. Enable developer mode
+5. Enable developer mode.
 6. Click on load unpacked, select the dist/ directory in the repository you cloned.
+7. Right click the extension icon in the menu bar and select "Options".
+8. Enter your Anthropic API key (don't worry, Sumi-chan will keep it safe)!
 
 
 ## Usage
