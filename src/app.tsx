@@ -73,15 +73,7 @@ function App() {
 
   function fadeInEmotion(rawEmotionText: string) {
     console.log("Raw emotion text:", rawEmotionText);
-    const emotions = [
-      "happy",
-      "sad",
-      "pout",
-      "curious",
-      "panic",
-      "disgust",
-      "neutral",
-    ];
+    const emotions = ["happy", "sad", "pout", "panic", "disgust", "neutral"];
 
     let emotion = rawEmotionText.toLowerCase().trim();
     console.log("processed", emotion);
@@ -105,7 +97,6 @@ function App() {
     happy: chrome.runtime.getURL("sumi_happy.png"),
     sad: chrome.runtime.getURL("sumi_sad.png"),
     pout: chrome.runtime.getURL("sumi_pout.png"),
-    curious: chrome.runtime.getURL("sumi_curious.png"),
     panic: chrome.runtime.getURL("sumi_panic.png"),
     disgust: chrome.runtime.getURL("sumi_disgust.png"),
     neutral: chrome.runtime.getURL("sumi_neutral.png"),
