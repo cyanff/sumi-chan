@@ -57,7 +57,7 @@ Here's what the timeline looks like:
 If you encounter any issues or have questions about Sumi-chan, please don't hesitate to ask me on [Discord](https://discord.gg/CNGAZrahmA)! 
 
 ## License
-Sumi-chan is released under the [MIT License](https://opensource.org/licenses/MIT). 
+Sumi-chan is released under the MIT License
 Feel free to use, modify, and distribute the code as you see fit.
 
 
