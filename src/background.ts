@@ -68,10 +68,10 @@ chrome.runtime.onMessage.addListener((req, _sender, sendReply) => {
           const sentiment = await anthropic.messages.create({
             max_tokens: 1024,
             system: sentimentPrompt,
-            messages: [...context, { role: "user", content: prompt }],
-            temperature: 0.5,
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.3,
             top_k: 500,
-            model: "claude-3-haiku-20240307",
+            model: "claude-3-sonnet-20240229",
           });
 
           const message = reply.content[0].text;
