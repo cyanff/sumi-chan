@@ -43,9 +43,14 @@ Sumi-chan could even answer any question you throw her way after summarizing the
   - Short-term Memory: Stores and updates conversation history for coherent AI responses.
   - Context Injection: Sends combined current prompt and conversation history to AI for context-aware responses.
   - Sentiment System: Analyzes sentiment of user responses to adjust UI dynamically, reflecting the emotion of the response.
-![image](https://github.com/cyanff/sumi-chan/assets/42996044/7c4a4cf3-b7ff-4641-8eca-03776d88df7b)
+![image](https://github.com/cyanff/sumi-chan/assets/42996044/94d2dc2e-1bd7-415c-a027-da5afc94ed04)
 
+Here's what the timeline looks like:
+- The user clicks on the extension
+- The background script event listener injects main.js into the current page
+- React is bootstraped, and the overlay is rendered
 
+- Everything is rendered inside of a contained Shadow DOM! So there won't be any Sumi-chan leakage!
 ![image](https://github.com/cyanff/sumi-chan/assets/42996044/e0fa063e-b8f8-4c72-b0f7-70d4e6dfb0a2)
 
 ## Support
