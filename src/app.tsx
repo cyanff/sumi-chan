@@ -84,7 +84,7 @@ function App() {
     ];
 
     let emotion = rawEmotionText.toLowerCase().trim();
-    console.log("Raw emotion text:", rawEmotionText);
+    console.log("processed", emotion);
     if (!emotions.includes(emotion)) {
       emotion = "neutral";
     }
@@ -195,7 +195,9 @@ function App() {
       <div
         ref={chatBarRef}
         onMouseDown={chatBarDrag}
-        className="min-h-36 min-w-64 h-36 w-96 fixed -bottom-10 right-1/2 z-50"
+        className={`min-h-36 min-w-64 h-36 w-96 fixed -bottom-10 right-1/2 z-50
+          ${overlayVisible ? "block" : "hidden"}
+        `}
       >
         <div className="relative flex min-h-fit w-full shrink-0 space-x-2 rounded-2xl bg-[hsl(0,0,93)] shadow-md px-4 py-3 cursor-grab overflow-hidden">
           <textarea
@@ -229,7 +231,7 @@ function App() {
 
           {/* Resizer */}
           <div
-            className="bottom-0 right-0 cursor-ew-resize rounded-xl w-2 h-full absolute bg-gray-400 opacity-40"
+            className="bottom-0 right-0 cursor-ew-resize rounded-xl w-2 h-full absolute bg-gray-400 opacity-40 "
             onMouseDown={(e) => {
               chatBarResize(e);
               e.stopPropagation();
