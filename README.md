@@ -9,8 +9,6 @@ With just a click of the extension icon, Sumi-chan will appear and summarize the
 
 Sumi-chan could even answer any question you throw her way after summarizing the page. And the best part? She'll change her expressions as you chat with her, making every interaction feel like a heartwarming conversation with your favorite anime character! (◡‿◡✿)
 
-made by: cyan, snavu
-
 ## Features
 ![sumi_demo](https://github.com/cyanff/hackathon/assets/42996044/942eb3b2-e437-4061-ae21-7ccac014805e)
 
@@ -51,7 +49,7 @@ Feel free to use, modify, and distribute the code as you see fit.
 ## Conclusion
 Sumi-chan is more than just a summarization tool – she's a companion, a friend, and a source of endless kawaii joy! Install her today and experience the magic of having your very own AI anime girl assistant by your side. Trust us, once you've experienced Sumi-chan's charm, you'll never want to browse the web without her again! 🌸
 
-Made with ❤️ by [moecorp](https://www.anime.gf/)
+Made with ❤️ by cyan and snavu @[moecorp](https://www.anime.gf/)
 
 
 sumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumisumi
