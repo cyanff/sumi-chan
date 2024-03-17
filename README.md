@@ -37,14 +37,14 @@ Sumi-chan could even answer any question you throw her way after summarizing the
 3. After the summary, you can start chatting with Sumi-chan and asking her questions. Prepare to be amazed by her knowledge and charmed by her adorable expressions!
 
 ## Architecture and Technical Notes
-![image](https://github.com/cyanff/sumi-chan/assets/42996044/7c4a4cf3-b7ff-4641-8eca-03776d88df7b)
-Architecture:
 - Uses Chrome extension APIs, React for the frontend, and Anthropic API for backend processing.
 - Uses Event listeners for user interactions, with state management in React for UI responsiveness.
 - React State Management:
   - Short-term Memory: Stores and updates conversation history for coherent AI responses.
   - Context Injection: Sends combined current prompt and conversation history to AI for context-aware responses.
   - Sentiment System: Analyzes sentiment of user responses to adjust UI dynamically, reflecting the emotion of the response.
+![image](https://github.com/cyanff/sumi-chan/assets/42996044/7c4a4cf3-b7ff-4641-8eca-03776d88df7b)
+
 
 ![image](https://github.com/cyanff/sumi-chan/assets/42996044/e0fa063e-b8f8-4c72-b0f7-70d4e6dfb0a2)
 
